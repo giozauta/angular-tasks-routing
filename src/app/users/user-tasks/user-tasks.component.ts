@@ -23,11 +23,11 @@ import {
   styleUrl: './user-tasks.component.css',
   imports: [RouterOutlet, RouterLink],
 })
-export class UserTasksComponent  {
+export class UserTasksComponent {
   userName = input.required<string>();
   message = input.required<string>();
 
-  //თუ რომ მეორე ხერხით დავიჭიროთ route იდან წამოსული data 
+  //თუ რომ მეორე ხერხით დავიჭიროთ route იდან წამოსული data
   // private activatedRoute = inject(ActivatedRoute);
   // ngOnInit(){
   //   this.activatedRoute.data.subscribe({
@@ -37,7 +37,7 @@ export class UserTasksComponent  {
   //   })
   // }
 
-  //როცა მონაცემებს როუტერიდან გადმოვცემთ ეს ყველაფერი აღარ გვჭირდება 
+  //როცა მონაცემებს როუტერიდან გადმოვცემთ ეს ყველაფერი აღარ გვჭირდება
   // userId = input.required<string>(); //იგივე სახელი რაც დინამიურ პარამეტრს აქვს
   // private usersService = inject(UsersService);
   // private activatedRoute = inject(ActivatedRoute);
@@ -64,7 +64,7 @@ export class UserTasksComponent  {
   // }
 }
 
-export const resolverUserName: ResolveFn<string>= (
+export const resolverUserName: ResolveFn<string> = (
   activatedRoute: ActivatedRouteSnapshot,
   routerState: RouterStateSnapshot
 ) => {
@@ -73,5 +73,12 @@ export const resolverUserName: ResolveFn<string>= (
     usersService.users.find(
       (u) => u.id === activatedRoute.paramMap.get('userId')
     )?.name || '';
-    return userName
+  return userName;
+};
+
+export const resolveTitle: ResolveFn<string> = (
+  activatedRoute,
+  routerState
+) => {
+  return resolverUserName(activatedRoute, routerState) + "'s tasks";
 };
