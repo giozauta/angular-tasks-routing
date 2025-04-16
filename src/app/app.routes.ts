@@ -5,8 +5,7 @@ import {
   resolveTitle,
   UserTasksComponent,
 } from './users/user-tasks/user-tasks.component';
-import { routes as userRoutes } from './users/users.routes';
-import { inject } from '@angular/core';
+// import { inject } from '@angular/core';
 
 // const dummyCanMatch: CanMatchFn = (route, segments) => {
 //   const router =inject(Router);
@@ -27,7 +26,8 @@ export const routes: Routes = [
   {
     path: 'users/:userId', // დინამიკური path პარამეტრით, მაგ: <your-domain>/users/u1
     component: UserTasksComponent, // ეს კომპონენტი გამოჩნდება ამ მისამართზე
-    children: userRoutes, // შიდა ქვე-რუტები ანუ nested routes
+    loadChildren:()=>import('./users/users.routes').then(mod=>mod.routes),
+    // children: userRoutes, // შიდა ქვე-რუტები ანუ nested routes
     // canMatch: [dummyCanMatch],
     data: {
       message: 'hello!', // დამატებითი მონაცემი, რომლის წაკითხვაც შეიძლება როუტისგან
